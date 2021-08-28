@@ -1,31 +1,26 @@
 module.exports = {
-    entry: {
-      app: "./src/index.js"
-    },
+    entry: "./src/js/main.js",
     output: {
-      path: __dirname + '/public/js',
-      filename: "[name].js"
+        path:__dirname+ '/dist/',
+        filename: "bundle.js",
+        publicPath: '/'
     },
-      devServer: {
-      contentBase: __dirname + '/public',
-      port: 8080,
-      publicPath: '/js/'
+    devServer: {
+        inline: false,
+        contentBase: "./dist",
     },
-    devtool: "eval-source-map",
-    mode: 'development',
     module: {
-      rules: [{
-        test: /\.js$/,
-        enforce: "pre",
-        exclude: /node_modules/,
-        loader: "eslint-loader"
-      }, {
-        test: /\.css$/,
-        loader: ["style-loader","css-loader"]
-      }, {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-       }]
+        loaders: [
+            {
+                test: /\.jsx?$/,
+                exclude:/(node_modules|bower_components)/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }
+        ]
     }
-  };
+
+};
+
