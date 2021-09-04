@@ -1,33 +1,28 @@
+const path = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   entry: {
-    app: "./src/index.js"
+    'js/app': ['./src/App.jsx'],
   },
   output: {
-    path: __dirname + '/public/js',
-    filename: "[name].js"
+    path: path.resolve(__dirname, 'dist/'),
+    publicPath: '/',
   },
-    devServer: {
-    contentBase: __dirname + '/public',
-    port: 8080,
-    publicPath: '/js/'
-  },
-  devtool: "eval-source-map",
-  mode: 'development',
   module: {
-    rules: [{
-      test: /\.js$/,
-      enforce: "pre",
-      exclude: /node_modules/,
-      loader: "eslint-loader"
-    }, {
-      test: /\.css$/,
-      use: ["style-loader","css-loader"]
-    }, {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-     }]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/,
+      },
+    ],
   },
- 
-  
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+    }),
+  ],
 };
